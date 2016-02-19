@@ -6,7 +6,7 @@ module.exports = {
   entry: [ 
     'webpack-hot-middleware/client?http://0.0.0.0:3000',
     'webpack/hot/only-dev-server', 
-    './src/app'
+    './src/app/main'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -23,11 +23,23 @@ module.exports = {
   ],
 	resolve: {
     root: path.resolve('./'),
-		extensions: ['', '.ts', '.js', '.tsx', '.html']
+		extensions: ['', '.ts', '.js', '.tsx', '.html', '.css', '.scss']
 	},
 	module: {
 		loaders: [
-			{test: /\.tsx?$/, loaders: ['react-hot', 'ts-loader']}
+			{test: /\.tsx?$/, loaders: ['react-hot', 'ts-loader']},
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ]
+      },
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
+      }
 		]
 	}
 }
